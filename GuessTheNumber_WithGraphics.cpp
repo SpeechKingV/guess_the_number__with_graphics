@@ -16,7 +16,7 @@ GuessTheNumber_WithGraphics::GuessTheNumber_WithGraphics(QWidget *parent) :
     connect(ui->clue,SIGNAL(clicked()),this,SLOT(clue_clicked()));
     connect(ui->help,SIGNAL(clicked()),this,SLOT(help_clicked()));
 
-    number = 1 + rand() % 100;
+    number = 1 + rand() % scatter;
 }
 
 void GuessTheNumber_WithGraphics::ok_clicked()
@@ -26,52 +26,52 @@ void GuessTheNumber_WithGraphics::ok_clicked()
     {
         ui->answer->setText("You lose! \n you've run out of moves");
         QFont font = ui->answer->font();
-            font.setPointSize(36);
-            ui->answer->setFont(font);
+        font.setPointSize(36);
+        ui->answer->setFont(font);
         ui->answer->setStyleSheet("color: rgb(255, 0, 0)");
     }
 
     input = ui->lineEdit->text().toInt();
 
-    remaining_moves--;
+    remaining_moves = remaining_moves -1;
 
     ui->moves->setText("remaining moves: " + QString::number(remaining_moves));
     QFont font = ui->moves->font();
-        font.setPointSize(36);
-        ui->moves->setFont(font);
+    font.setPointSize(36);
+    ui->moves->setFont(font);
     ui->moves->setStyleSheet("color: rgb(255, 255, 255)");
 
     if(number == input)
     {
         ui->answer->setText("You win!");
         font = ui->answer->font();
-            font.setPointSize(36);
-            ui->answer->setFont(font);
+        font.setPointSize(36);
+        ui->answer->setFont(font);
         ui->answer->setStyleSheet("color: rgb(0, 255, 0)");
     }
     else if(number > input)
     {
         ui->answer->setText("My number is higher!");
         font = ui->answer->font();
-            font.setPointSize(36);
-            ui->answer->setFont(font);
+        font.setPointSize(36);
+        ui->answer->setFont(font);
         ui->answer->setStyleSheet("color: rgb(255, 255, 255)");
     }
     else if(number < input)
     {
         ui->answer->setText("My number is less!");
         font = ui->answer->font();
-            font.setPointSize(36);
-            ui->answer->setFont(font);
-            ui->answer->setStyleSheet("color: rgb(255, 255, 255)");
+        font.setPointSize(36);
+        ui->answer->setFont(font);
+        ui->answer->setStyleSheet("color: rgb(255, 255, 255)");
     }
 
     if(remaining_moves < 0)
     {
         ui->answer->setText("You lose! \n you've run out of moves");
         font = ui->answer->font();
-            font.setPointSize(36);
-            ui->answer->setFont(font);
+        font.setPointSize(36);
+        ui->answer->setFont(font);
         ui->answer->setStyleSheet("color: rgb(255, 0, 0)");
     }
 }
@@ -82,21 +82,18 @@ void GuessTheNumber_WithGraphics::clue_clicked()
     {
         ui->answer->setText("You lose! \n you've run out of moves");
         QFont font = ui->answer->font();
-            font.setPointSize(36);
-            ui->answer->setFont(font);
+        font.setPointSize(36);
+        ui->answer->setFont(font);
         ui->answer->setStyleSheet("color: rgb(255, 0, 0)");
-
-        static QMutex mutex;
-           static QMutexLocker locker(&mutex);
-           mutex.tryLock(60000);
         close();
     }
 
-    remaining_moves--;
+    remaining_moves = remaining_moves -1;
+
     ui->moves->setText("remaining moves: " + QString::number(remaining_moves));
     QFont font = ui->moves->font();
-        font.setPointSize(36);
-        ui->moves->setFont(font);
+    font.setPointSize(36);
+    ui->moves->setFont(font);
     ui->moves->setStyleSheet("color: rgb(255, 255, 255)");
 
     srand(time(NULL));
@@ -106,8 +103,8 @@ void GuessTheNumber_WithGraphics::clue_clicked()
 
     ui->answer->setText("Clue: around " + QString::number(clue));
     font = ui->answer->font();
-        font.setPointSize(36);
-        ui->answer->setFont(font);
+    font.setPointSize(36);
+    ui->answer->setFont(font);
     ui->answer->setStyleSheet("color: rgb(255, 255, 255)");
 
 
@@ -115,8 +112,8 @@ void GuessTheNumber_WithGraphics::clue_clicked()
     {
         ui->answer->setText("You lose! \n you've run out of moves");
         QFont font = ui->answer->font();
-            font.setPointSize(36);
-            ui->answer->setFont(font);
+        font.setPointSize(36);
+        ui->answer->setFont(font);
         ui->answer->setStyleSheet("color: rgb(255, 0, 0)");
     }
 

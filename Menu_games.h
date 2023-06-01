@@ -19,11 +19,11 @@ public:
 private:
     Ui::MenuGames *ui;
 
-
 private slots:
 
     void SANG_clicked();
     //void settings_cliked();
+    void continue_clicked();
 
 };
 

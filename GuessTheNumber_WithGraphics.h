@@ -5,7 +5,8 @@
 #include <QIntValidator>
 #include <QString>
 #include <QMessageBox>
-#include <QMutex>
+#include <QThread>
+#include "ui_GuessTheNumber_WithGraphics.h"
 
 namespace Ui {
 class GuessTheNumber_WithGraphics;
@@ -18,7 +19,22 @@ class GuessTheNumber_WithGraphics : public QMainWindow
 public:
     explicit GuessTheNumber_WithGraphics(QWidget *parent = nullptr);
 
+//    void set()
+//    {
+//        remaining_moves = remaining_moves + remaining_moves;
+//        ui->moves->setText("remaining moves: " + QString::number(remaining_moves));
+//        QFont font = ui->moves->font();
+//            font.setPointSize(36);
+//            ui->moves->setFont(font);
+//        ui->moves->setStyleSheet("color: rgb(255, 255, 255)");
+
+//        scatter += scatter;
+
+//    }
+
 private:
+
+    int scatter = 100;
 
     int input = 0;
 
@@ -35,7 +51,6 @@ private slots:
     void clue_clicked();
 
     int help_clicked();
-
 };
 
 #endif // GUESSTHENUMBER_WITHGRAPHICS_H
