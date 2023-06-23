@@ -10,15 +10,17 @@ CONFIG += c++11
 
 SOURCES += \
     GuessTheNumber_WithGraphics.cpp \
+    Leaderboard.cpp \
     Menu_games.cpp \
-    main.cpp \
+    Ssettings_window.cpp \
+    main.cpp
 
 
 HEADERS += \
     GuessTheNumber_WithGraphics.h \
-    Menu_games.h
-
-
+    Leaderboard.h \
+    Menu_games.h \
+    Ssettings_window.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -27,7 +29,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 FORMS += \
     GuessTheNumber_WithGraphics.ui \
+    Leaderboard.ui \
     Menu_games.ui \
+    Ssettings_window.ui \
     guessthenumber_withgraphics.ui
 
 

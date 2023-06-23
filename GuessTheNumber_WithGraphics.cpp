@@ -1,11 +1,17 @@
 #include "GuessTheNumber_WithGraphics.h"
 #include "ui_GuessTheNumber_WithGraphics.h"
 
-GuessTheNumber_WithGraphics::GuessTheNumber_WithGraphics(QWidget *parent) :
+GuessTheNumber_WithGraphics::GuessTheNumber_WithGraphics(QVector<int> settings,QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::GuessTheNumber_WithGraphics)
 {
     srand(time(NULL));
+
+    //clue
+    if(!settings[2])
+    {
+        ui->clue->setEnabled(true);
+    }
 
     ui->setupUi(this);
 
@@ -15,6 +21,7 @@ GuessTheNumber_WithGraphics::GuessTheNumber_WithGraphics(QWidget *parent) :
     connect(ui->ok,SIGNAL(clicked()),this,SLOT(ok_clicked()));
     connect(ui->clue,SIGNAL(clicked()),this,SLOT(clue_clicked()));
     connect(ui->help,SIGNAL(clicked()),this,SLOT(help_clicked()));
+    connect(this,SIGNAL(win()),this,SLOT(set()));
 
     number = 1 + rand() % scatter;
 }
@@ -48,6 +55,8 @@ void GuessTheNumber_WithGraphics::ok_clicked()
         font.setPointSize(36);
         ui->answer->setFont(font);
         ui->answer->setStyleSheet("color: rgb(0, 255, 0)");
+
+        emit win();
     }
     else if(number > input)
     {
@@ -73,6 +82,7 @@ void GuessTheNumber_WithGraphics::ok_clicked()
         font.setPointSize(36);
         ui->answer->setFont(font);
         ui->answer->setStyleSheet("color: rgb(255, 0, 0)");
+        emit game_over();
     }
 }
 

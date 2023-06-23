@@ -19,10 +19,12 @@ public:
 private:
     Ui::MenuGames *ui;
 
+    QVector<int> settings = {1,1,50,15,15};
+
 private slots:
 
     void SANG_clicked();
-    //void settings_cliked();
+    void settings_cliked();
     void continue_clicked();
 
 };

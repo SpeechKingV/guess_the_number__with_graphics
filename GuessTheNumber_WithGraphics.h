@@ -17,20 +17,7 @@ class GuessTheNumber_WithGraphics : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit GuessTheNumber_WithGraphics(QWidget *parent = nullptr);
-
-//    void set()
-//    {
-//        remaining_moves = remaining_moves + remaining_moves;
-//        ui->moves->setText("remaining moves: " + QString::number(remaining_moves));
-//        QFont font = ui->moves->font();
-//            font.setPointSize(36);
-//            ui->moves->setFont(font);
-//        ui->moves->setStyleSheet("color: rgb(255, 255, 255)");
-
-//        scatter += scatter;
-
-//    }
+    explicit GuessTheNumber_WithGraphics(QVector<int> settings,QWidget *parent = nullptr);
 
 private:
 
@@ -42,7 +29,17 @@ private:
 
     int remaining_moves = 10;
 
+    int moves = 10;
+
+    int lvl = 1;
+
     Ui::GuessTheNumber_WithGraphics *ui;
+
+signals:
+
+    void win();
+
+    void game_over();
 
 private slots:
 
@@ -51,6 +48,27 @@ private slots:
     void clue_clicked();
 
     int help_clicked();
+
+    void set()
+    {
+        srand(time(NULL));
+        moves = moves + moves;
+        remaining_moves += moves;
+        ui->moves->setText("remaining moves: " + QString::number(remaining_moves));
+        QFont font = ui->moves->font();
+            font.setPointSize(36);
+            ui->moves->setFont(font);
+        ui->moves->setStyleSheet("color: rgb(255, 255, 255)");
+
+        lvl++;
+
+        setWindowTitle("Guess The Number|LvL " + QString(lvl));
+
+
+        scatter += scatter;
+        number = 1 + rand() % scatter;
+
+    }
 };
 
 #endif // GUESSTHENUMBER_WITHGRAPHICS_H

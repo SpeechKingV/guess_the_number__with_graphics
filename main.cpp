@@ -32,7 +32,10 @@ int main(int argc, char *argv[])
     load_Window(&splash);
 
     MenuGames mg;
+    splash.close();
     mg.show();
+    mg.setWindowIcon(QIcon(":/icons/icon.png"));
+    mg.setWindowTitle("Guess The Number");
 
     return a.exec();
 }

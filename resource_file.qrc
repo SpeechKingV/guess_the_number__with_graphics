@@ -2,10 +2,12 @@
     <qresource prefix="/1">
         <file>background.jpg</file>
         <file>background_menu.jpg</file>
+        <file>honey_carbon_backgraund.jpg</file>
     </qresource>
     <qresource prefix="/icons">
         <file>icon.png</file>
         <file>information.jpg</file>
+        <file>settings.png</file>
     </qresource>
     <qresource prefix="/loading">
         <file>loading.jpg</file>
