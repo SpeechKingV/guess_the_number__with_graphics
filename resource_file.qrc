@@ -3,13 +3,20 @@
         <file>background.jpg</file>
         <file>background_menu.jpg</file>
         <file>honey_carbon_backgraund.jpg</file>
+        <file>secret.jpg</file>
     </qresource>
     <qresource prefix="/icons">
         <file>icon.png</file>
         <file>information.jpg</file>
         <file>settings.png</file>
+        <file>icon_leaderboard.jpg</file>
     </qresource>
     <qresource prefix="/loading">
         <file>loading.jpg</file>
+    </qresource>
+    <qresource prefix="/top">
+        <file>bronze.jpg</file>
+        <file>gold.png</file>
+        <file>silver.jpg</file>
     </qresource>
 </RCC>

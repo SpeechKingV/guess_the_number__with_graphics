@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QVector>
+#include "VolumeOS.h"
 #include "ui_Ssettings_window.h"
 
 namespace Ui {
@@ -33,6 +34,7 @@ private slots:
         if(a)
         {
             settings[1] = 1;
+
         }
         else
         {
@@ -55,6 +57,8 @@ private slots:
     void music_volume_changed()
     {
         settings[3] = ui->music_volume->value();
+        VolumeOS VO;
+        VO.VolumeSET(settings[3],true);
     }
 
     void upper_limit_changed()

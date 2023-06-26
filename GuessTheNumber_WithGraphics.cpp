@@ -15,6 +15,10 @@ GuessTheNumber_WithGraphics::GuessTheNumber_WithGraphics(QVector<int> settings,Q
 
     ui->setupUi(this);
 
+    ui->ok->setShortcut(Qt::Key_Enter);
+    ui->lineEdit->setPlaceholderText(QString::fromLocal8Bit("input number"));
+
+
     QValidator *validator = new QIntValidator(1,100,this);
     ui->lineEdit->setValidator(validator);
 
@@ -22,6 +26,7 @@ GuessTheNumber_WithGraphics::GuessTheNumber_WithGraphics(QVector<int> settings,Q
     connect(ui->clue,SIGNAL(clicked()),this,SLOT(clue_clicked()));
     connect(ui->help,SIGNAL(clicked()),this,SLOT(help_clicked()));
     connect(this,SIGNAL(win()),this,SLOT(set()));
+    connect(timer, SIGNAL(timeout()), this, SLOT(timer_()));
 
     number = 1 + rand() % scatter;
 }
@@ -56,7 +61,7 @@ void GuessTheNumber_WithGraphics::ok_clicked()
         ui->answer->setFont(font);
         ui->answer->setStyleSheet("color: rgb(0, 255, 0)");
 
-        emit win();
+        timer->start(5000);
     }
     else if(number > input)
     {

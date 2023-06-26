@@ -1,3 +1,4 @@
+
 #ifndef GUESSTHENUMBER_WITHGRAPHICS_H
 #define GUESSTHENUMBER_WITHGRAPHICS_H
 
@@ -5,7 +6,12 @@
 #include <QIntValidator>
 #include <QString>
 #include <QMessageBox>
-#include <QThread>
+#include <QTimer>
+#include <QTime>
+#include <QShortcut>
+#include <QEvent>
+#include <QFileInfo>
+#include <QTextStream>
 #include "ui_GuessTheNumber_WithGraphics.h"
 
 namespace Ui {
@@ -19,7 +25,16 @@ class GuessTheNumber_WithGraphics : public QMainWindow
 public:
     explicit GuessTheNumber_WithGraphics(QVector<int> settings,QWidget *parent = nullptr);
 
+    int getlvl()
+    {
+        return lvl;
+    }
+
 private:
+
+    QEvent *backspace;
+
+    QTimer *timer = new QTimer(this);
 
     int scatter = 100;
 
@@ -49,8 +64,19 @@ private slots:
 
     int help_clicked();
 
+    void gameOver()
+    {
+        close();
+    }
+
+    void timer_()
+    {
+        emit win();
+    }
+
     void set()
     {
+        timer->stop();
         srand(time(NULL));
         moves = moves + moves;
         remaining_moves += moves;
@@ -62,10 +88,23 @@ private slots:
 
         lvl++;
 
-        setWindowTitle("Guess The Number|LvL " + QString(lvl));
+        QFile file("Save.txt");
 
+        if(file.open(QIODevice::WriteOnly))
+        {
+            QFileInfo fileinfo (file);
+            QTextStream stream(&file);
+            stream << QString::number(lvl);
+            file.close();
+        }
+
+        setWindowTitle("Guess The Number|LvL " + QString::number(lvl));
 
         scatter += scatter;
+
+        ui->answer->setText("Guess the next number from 1 to " + QString::number(scatter));
+        ui->answer->setStyleSheet("color: rgb(255, 255, 255)");
+
         number = 1 + rand() % scatter;
 
     }

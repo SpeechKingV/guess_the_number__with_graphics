@@ -174,7 +174,7 @@
         </size>
        </property>
        <property name="text">
-        <string>input number</string>
+        <string/>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -209,9 +209,9 @@
    <widget class="QLabel" name="answer">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>200</x>
       <y>100</y>
-      <width>771</width>
+      <width>871</width>
       <height>171</height>
      </rect>
     </property>

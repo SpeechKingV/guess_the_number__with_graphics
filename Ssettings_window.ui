@@ -332,6 +332,25 @@
      </item>
     </layout>
    </widget>
+   <widget class="QLabel" name="label_10">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>801</width>
+      <height>611</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/1/secret.jpg&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <zorder>label_10</zorder>
+   <zorder>backgraund</zorder>
+   <zorder>Ssettings</zorder>
+   <zorder>layoutWidget</zorder>
+   <zorder>gridLayoutWidget</zorder>
+   <zorder>horizontalLayoutWidget_2</zorder>
   </widget>
  </widget>
  <resources/>

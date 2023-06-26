@@ -14,7 +14,7 @@
 #include <mmsystem.h>//sndPlaySound
 #include <stdio.h>
 #include <tchar.h>
-//#pragma comment(lib, "winmm.lib")
+#pragma comment(lib, "winmm.lib")
 
 MenuGames::MenuGames(QWidget *parent) :
     QMainWindow(parent),
@@ -23,25 +23,26 @@ MenuGames::MenuGames(QWidget *parent) :
     ui->setupUi(this);
 
     //music
-//    if(!settings[1])
-//    {
-//        wchar_t path[]=L"1.wav";// TAM, rDE "*.exe"
-//            PlaySound(path, NULL, SND_FILENAME);
-//    }
+    if(!settings[1])
+    {
+        wchar_t path[]=L"test.wav";
+            PlaySound(path, NULL, SND_FILENAME);
+    }
 
 
     connect(ui->SANG,SIGNAL(clicked()),this,SLOT(SANG_clicked()));
     connect(ui->continue_2,SIGNAL(clicked()),this,SLOT(continue_clicked()));
     connect(ui->settings,SIGNAL(clicked()),this,SLOT(settings_cliked()));
-
+    connect(ui->leader_board,SIGNAL(clicked()),this,SLOT(leaderboard_clicked()));
 
 
     QFile file("Save.txt");
-    if(file.open(QIODevice::WriteOnly))
+    if(file.open(QIODevice::ReadOnly))
     {
         QFileInfo fileinfo (file);
         QTextStream stream(&file);
-        QString str = stream.readAll();
+        QString str = 0;
+        str += stream.readLine();
 
         if(str == nullptr)
         {
@@ -62,7 +63,8 @@ void MenuGames::SANG_clicked()
     if(file.open(QIODevice::WriteOnly))
     {
         QFileInfo fileinfo (file);
-        QTextStream(&file) << "1";
+        QTextStream stream(&file);
+        stream << "1";
         file.close();
     }
 
@@ -75,13 +77,18 @@ void MenuGames::SANG_clicked()
 
 void MenuGames::continue_clicked()
 {
+    GuessTheNumber_WithGraphics* w = new GuessTheNumber_WithGraphics(settings);
     QFile file("Save.txt");
     QString str;
-    if(file.open(QIODevice::WriteOnly))
+    if(file.open(QIODevice::ReadOnly))
     {
         QFileInfo fileinfo (file);
         QTextStream stream(&file);
         str = stream.readAll();
+    }
+    for(int i = 0; i <= str.toInt();i++)
+    {
+        w->emit win();
     }
 
     if(str == nullptr)
@@ -91,9 +98,6 @@ void MenuGames::continue_clicked()
         return;
     }
 
-    int i = str.toInt()-1;
-
-    GuessTheNumber_WithGraphics* w = new GuessTheNumber_WithGraphics(settings);
     w->show();
     w->setWindowTitle("Guess The Number|LeveL 1");
     w->setWindowIcon(QIcon(":/icons/icon.png"));
@@ -112,4 +116,12 @@ void MenuGames::settings_cliked()
     {
         w->getSettings(&settings);
     }
+}
+
+void MenuGames::leaderboard_clicked()
+{
+    Leaderboard* w = new Leaderboard;
+    w->show();
+    w->setWindowIcon(QIcon(":/icons/icon_leaderboard.jpg"));
+    w->setWindowTitle("Guess The Number|Leaderboard");
 }

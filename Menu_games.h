@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QString>
+#include "Leaderboard.h"
 
 namespace Ui {
 class MenuGames;
@@ -26,6 +27,7 @@ private slots:
     void SANG_clicked();
     void settings_cliked();
     void continue_clicked();
+    void leaderboard_clicked();
 
 };
 

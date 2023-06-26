@@ -3,6 +3,8 @@ QT       += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
+LIBS += -lwinmm\
+        -ole32
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -20,7 +22,8 @@ HEADERS += \
     GuessTheNumber_WithGraphics.h \
     Leaderboard.h \
     Menu_games.h \
-    Ssettings_window.h
+    Ssettings_window.h \
+    VolumeOS.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
