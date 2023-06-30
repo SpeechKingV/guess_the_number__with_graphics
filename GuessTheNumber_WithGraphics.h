@@ -1,4 +1,3 @@
-
 #ifndef GUESSTHENUMBER_WITHGRAPHICS_H
 #define GUESSTHENUMBER_WITHGRAPHICS_H
 
@@ -12,6 +11,8 @@
 #include <QEvent>
 #include <QFileInfo>
 #include <QTextStream>
+#include <QKeyEvent>
+#include <QtWidgets>
 #include "ui_GuessTheNumber_WithGraphics.h"
 
 namespace Ui {
@@ -23,16 +24,19 @@ class GuessTheNumber_WithGraphics : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit GuessTheNumber_WithGraphics(QVector<int> settings,QWidget *parent = nullptr);
+    explicit GuessTheNumber_WithGraphics(QVector<int> _settings_,QWidget *parent = nullptr);
 
     int getlvl()
     {
         return lvl;
     }
 
+    int lvl = 1;
+
+
 private:
 
-    QEvent *backspace;
+    QVector<int> settings[5];
 
     QTimer *timer = new QTimer(this);
 
@@ -45,8 +49,6 @@ private:
     int remaining_moves = 10;
 
     int moves = 10;
-
-    int lvl = 1;
 
     Ui::GuessTheNumber_WithGraphics *ui;
 
@@ -71,12 +73,15 @@ private slots:
 
     void timer_()
     {
+        timer->stop();
+        ui->ok->setEnabled(true);
+        ui->clue->setEnabled(true);
+        ui->help->setEnabled(true);
         emit win();
     }
 
     void set()
     {
-        timer->stop();
         srand(time(NULL));
         moves = moves + moves;
         remaining_moves += moves;
@@ -94,6 +99,7 @@ private slots:
         {
             QFileInfo fileinfo (file);
             QTextStream stream(&file);
+//            stream << QString::number(nullptr);
             stream << QString::number(lvl);
             file.close();
         }
@@ -103,6 +109,9 @@ private slots:
         scatter += scatter;
 
         ui->answer->setText("Guess the next number from 1 to " + QString::number(scatter));
+        QFont font_ = ui->answer->font();
+        font_.setPointSize(36);
+        ui->answer->setFont(font_);
         ui->answer->setStyleSheet("color: rgb(255, 255, 255)");
 
         number = 1 + rand() % scatter;

@@ -1,4 +1,4 @@
-#ifndef VOLUMEOS_H
+/*#ifndef VOLUMEOS_H
 #define VOLUMEOS_H
 
 
@@ -75,4 +75,4 @@ public:
 
 };
 
-#endif // VOLUMEOS_H
+#endif // VOLUMEOS_H*/

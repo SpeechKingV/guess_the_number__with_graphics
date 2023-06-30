@@ -19,4 +19,5 @@
         <file>gold.png</file>
         <file>silver.jpg</file>
     </qresource>
+    <qresource prefix="/"/>
 </RCC>

@@ -23,11 +23,11 @@ MenuGames::MenuGames(QWidget *parent) :
     ui->setupUi(this);
 
     //music
-    if(!settings[1])
-    {
-        wchar_t path[]=L"test.wav";
-            PlaySound(path, NULL, SND_FILENAME);
-    }
+//    if(!settings[0])
+//    {
+//        wchar_t path[]=L"test.wav";
+//            PlaySound(path, NULL, SND_FILENAME);
+//    }
 
 
     connect(ui->SANG,SIGNAL(clicked()),this,SLOT(SANG_clicked()));
@@ -44,7 +44,7 @@ MenuGames::MenuGames(QWidget *parent) :
         QString str = 0;
         str += stream.readLine();
 
-        if(str == nullptr)
+        if(str == nullptr||str == QString::number(1))
         {
             ui->continue_2->setEnabled(false);
         }
@@ -64,7 +64,7 @@ void MenuGames::SANG_clicked()
     {
         QFileInfo fileinfo (file);
         QTextStream stream(&file);
-        stream << "1";
+        stream << QString::number(1);
         file.close();
     }
 
@@ -77,29 +77,32 @@ void MenuGames::SANG_clicked()
 
 void MenuGames::continue_clicked()
 {
-    GuessTheNumber_WithGraphics* w = new GuessTheNumber_WithGraphics(settings);
+
     QFile file("Save.txt");
     QString str;
+    int D = 0;
     if(file.open(QIODevice::ReadOnly))
     {
         QFileInfo fileinfo (file);
         QTextStream stream(&file);
-        str = stream.readAll();
+        str = stream.readLine();
     }
-    for(int i = 0; i <= str.toInt();i++)
-    {
-        w->emit win();
-    }
-
     if(str == nullptr)
     {
-        qDebug() << "Save Null";
+        qDebug() << "Save Null or at the first level";
         SANG_clicked();
         return;
     }
-
+    GuessTheNumber_WithGraphics* w = new GuessTheNumber_WithGraphics(settings);
+    w->lvl = 1;
+    D = str.toInt();
+    qDebug() << D;
+    for(int i = 2; i <= str.toInt();i++)
+    {
+        w->emit win();
+    }
     w->show();
-    w->setWindowTitle("Guess The Number|LeveL 1");
+    w->setWindowTitle("Guess The Number|LeveL " + QString::number(w->getlvl()));
     w->setWindowIcon(QIcon(":/icons/icon.png"));
 
     file.close();
@@ -114,7 +117,7 @@ void MenuGames::settings_cliked()
     w->setWindowTitle("Guess The Number|Settings");
     if(w->isHidden())
     {
-        w->getSettings(&settings);
+        w->getSettings(settings);
     }
 }
 

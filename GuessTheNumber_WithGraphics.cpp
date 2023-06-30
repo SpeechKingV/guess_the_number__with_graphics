@@ -1,14 +1,17 @@
 #include "GuessTheNumber_WithGraphics.h"
 #include "ui_GuessTheNumber_WithGraphics.h"
 
-GuessTheNumber_WithGraphics::GuessTheNumber_WithGraphics(QVector<int> settings,QWidget *parent) :
+GuessTheNumber_WithGraphics::GuessTheNumber_WithGraphics(QVector<int> _settings_,QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::GuessTheNumber_WithGraphics)
 {
     srand(time(NULL));
-
+    for (int i = 0;i < 4 ; i++ )
+    {
+        settings->operator[](i) = _settings_.operator[](i);
+    }
     //clue
-    if(!settings[2])
+    if(!settings->operator[](1))
     {
         ui->clue->setEnabled(true);
     }
@@ -16,10 +19,12 @@ GuessTheNumber_WithGraphics::GuessTheNumber_WithGraphics(QVector<int> settings,Q
     ui->setupUi(this);
 
     ui->ok->setShortcut(Qt::Key_Enter);
+    ui->ok->setDefault(true);
+    ui->ok->setAutoDefault(true);
     ui->lineEdit->setPlaceholderText(QString::fromLocal8Bit("input number"));
 
 
-    QValidator *validator = new QIntValidator(1,100,this);
+    QValidator *validator = new QIntValidator(1,10000000,this);
     ui->lineEdit->setValidator(validator);
 
     connect(ui->ok,SIGNAL(clicked()),this,SLOT(ok_clicked()));
@@ -27,6 +32,7 @@ GuessTheNumber_WithGraphics::GuessTheNumber_WithGraphics(QVector<int> settings,Q
     connect(ui->help,SIGNAL(clicked()),this,SLOT(help_clicked()));
     connect(this,SIGNAL(win()),this,SLOT(set()));
     connect(timer, SIGNAL(timeout()), this, SLOT(timer_()));
+    connect(ui->lineEdit,SIGNAL(returnPressed),this,SLOT(ok_clicked()));
 
     number = 1 + rand() % scatter;
 }
@@ -60,7 +66,9 @@ void GuessTheNumber_WithGraphics::ok_clicked()
         font.setPointSize(36);
         ui->answer->setFont(font);
         ui->answer->setStyleSheet("color: rgb(0, 255, 0)");
-
+        ui->ok->setEnabled(false);
+        ui->clue->setEnabled(false);
+        ui->help->setEnabled(false);
         timer->start(5000);
     }
     else if(number > input)
@@ -113,7 +121,8 @@ void GuessTheNumber_WithGraphics::clue_clicked()
 
     srand(time(NULL));
 
-    int temp = -10 + rand() % 13;
+    int temp = -settings->operator[](4)+ rand() % settings->operator[](3);
+    qDebug() << "-" << settings->operator[](4) << "+" << settings->operator[](3);
     int clue = number + temp;
 
     ui->answer->setText("Clue: around " + QString::number(clue));
